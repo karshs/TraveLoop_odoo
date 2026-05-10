@@ -1,0 +1,52 @@
+/* ── Layout shell ── */
+.layout-root *,
+.layout-root *::before,
+.layout-root *::after {
+  box-sizing: border-box;
+}
+
+.layout-root button {
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.layout-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #0a0a0c;
+  overflow: hidden;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.layout-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
+  position: relative;
+  background-color: #0a0a0c;
+}
+
+.layout-main::-webkit-scrollbar { width: 4px; }
+.layout-main::-webkit-scrollbar-track { background: transparent; }
+.layout-main::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.07); border-radius: 9999px; }
+
+/* Ambient glow behind content */
+.layout-glow {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}

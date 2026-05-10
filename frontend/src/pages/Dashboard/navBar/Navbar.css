@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
+
+.layout-root .navbar {
+  height: 56px;
+  min-height: 56px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.75rem;
+  background: rgba(10, 10, 12, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  position: relative;
+  z-index: 50;
+  flex-shrink: 0;
+}
+
+.layout-root .nav-brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: linear-gradient(100deg, #fffbe6 0%, #ffd700 40%, #f5a800 75%, #ffe566 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: navShimmer 5s linear infinite;
+}
+
+@keyframes navShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.layout-root .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.layout-root .nav-greeting {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: -0.01em;
+}
+
+.layout-root .nav-greeting-name {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.layout-root .nav-avatar-wrap { position: relative; }
+
+.layout-root .nav-avatar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  color: rgba(255, 215, 0, 0.8);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.layout-root .nav-avatar:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.layout-root .nav-avatar-chevron {
+  color: rgba(255, 215, 0, 0.5);
+  transition: transform 0.2s ease;
+  display: none;
+}
+
+.layout-root .nav-avatar-chevron.open { transform: rotate(180deg); }
+
+.layout-root .nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  background: rgba(16, 16, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 0.5rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  animation: dropIn 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.layout-root .nav-dropdown-header {
+  padding: 0.5rem 0.65rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.layout-root .nav-dropdown-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.01em;
+}
+
+.layout-root .nav-dropdown-email {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.layout-root .nav-dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 0.25rem 0;
+}
+
+.layout-root .nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.layout-root .nav-dropdown-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.85); }
+.layout-root .nav-dropdown-item.danger { color: rgba(248, 113, 113, 0.6); }
+.layout-root .nav-dropdown-item.danger:hover { background: rgba(248,113,113,0.07); color: rgba(248,113,113,0.85); }
+
+.layout-root .logout-btn {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.layout-root .logout-btn:hover { color: rgba(248,113,113,0.7); border-color: rgba(248,113,113,0.2); }

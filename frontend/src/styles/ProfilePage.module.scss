@@ -1,0 +1,183 @@
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 3rem;
+  h1 { font-size: 2.5rem; margin: 0; }
+}
+
+.profileSection, .passwordSection, .dangerZone {
+  @include glassmorphism;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.avatarWrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.5); // gradient border imitation
+
+  &:hover .uploadOverlay {
+    opacity: 1;
+  }
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitials {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4a90e2, #50e3c2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.uploadOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.hiddenFile {
+  display: none;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  input, select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+
+    &:focus { outline: none; border-color: rgba(255,255,255,0.3); }
+    option { background: #1a1a1a; }
+  }
+}
+
+.saveBtn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.9; }
+}
+
+.passwordForm {
+  max-width: 400px;
+}
+
+.passInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input { width: 100%; padding-right: 2.5rem; }
+
+  button {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    &:hover { color: #fff; }
+  }
+}
+
+.dangerZone {
+  border: 1px solid rgba(255,59,48,0.3);
+  background: rgba(255,59,48,0.05);
+
+  .dangerHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    
+    h2 { margin: 0; color: #ff3b30; }
+  }
+
+  p { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+
+  .deleteBtn {
+    background: transparent;
+    color: #ff3b30;
+    border: 1px solid #ff3b30;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #ff3b30;
+      color: #fff;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 5rem;
+  color: #fff;
+  font-size: 1.2rem;
+}

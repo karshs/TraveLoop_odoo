@@ -1,0 +1,60 @@
+.post-card { cursor: default; }
+
+.post-header { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.6rem; }
+
+.post-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+.post-user { font-size: 0.82rem; font-weight: 600; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; }
+.post-time { font-size: 10px; color: rgba(255, 255, 255, 0.25); font-family: 'Bricolage Grotesque', sans-serif; }
+.post-body { font-size: 0.82rem; color: rgba(255, 255, 255, 0.45); line-height: 1.55; margin-bottom: 0.75rem; font-family: 'Bricolage Grotesque', sans-serif; }
+
+.post-actions { display: flex; gap: 1rem; }
+
+.post-action {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.post-action:hover { color: rgba(255, 215, 0, 0.7); }
+.post-action.liked { color: rgba(248, 113, 113, 0.8); }
+
+.trending-row { display: flex; align-items: center; gap: 0.7rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.trending-dest { flex: 1; font-size: 0.82rem; font-weight: 500; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; }
+
+.post-textarea {
+  width: 100%;
+  background: rgba(16, 16, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s;
+}
+
+.post-textarea::placeholder { color: rgba(255, 255, 255, 0.2); }
+.post-textarea:focus { border-color: rgba(255, 215, 0, 0.35); box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.05); }

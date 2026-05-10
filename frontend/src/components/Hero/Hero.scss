@@ -1,27 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
-
 .hero {
   width: 100%;
   height: 100vh;
+  min-height: 700px;
   overflow: hidden;
   position: relative;
+  background: #050505;
 
+  /* ── Loader ── */
   &__loader {
     position: absolute;
     inset: 0;
-    background: #0a0a0a;
+    background: #050505;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    z-index: 5;
   }
 
   &__spinner {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 3px solid rgba(255, 215, 0, 0.15);
-    border-top-color: #ffd700;
+    border: 3px solid rgba(245, 197, 24, 0.12);
+    border-top-color: #f5c518;
     animation: heroSpin 0.75s linear infinite;
   }
 
@@ -29,71 +30,171 @@
     to { transform: rotate(360deg); }
   }
 
+  /* ── Background image ── */
   &__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
     display: block;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transform: scale(1.05);
+    transition: opacity 0.8s ease, transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
 
     &--loaded {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* ── Gradient overlays ── */
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      /* Center dark radial vignette */
+      radial-gradient(ellipse 80% 80% at 50% 45%, rgba(5, 5, 5, 0.15) 0%, rgba(5, 5, 5, 0.65) 100%),
+      /* Top fade for navbar readability */
+      linear-gradient(180deg, rgba(5, 5, 5, 0.7) 0%, transparent 30%),
+      /* Bottom fade */
+      linear-gradient(0deg, rgba(5, 5, 5, 0.85) 0%, transparent 45%);
+  }
+
+  /* ── Flight path SVG ── */
+  &__flight-path {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease 0.8s;
+
+    &--visible {
       opacity: 1;
     }
   }
 
-  // Title block — top 40%, below navbar
+  &__path-line {
+    stroke-dasharray: 2400;
+    stroke-dashoffset: 2400;
+    animation: drawPath 3s ease forwards 1.2s;
+  }
+
+  @keyframes drawPath {
+    to { stroke-dashoffset: 0; }
+  }
+
+  &__node {
+    transform-origin: center;
+    animation: nodePulse 2.5s ease-in-out infinite;
+    opacity: 0;
+
+    &--1 { animation-delay: 1.8s; }
+    &--2 { animation-delay: 2.2s; }
+    &--3 { animation-delay: 2.6s; }
+    &--4 { animation-delay: 3.0s; }
+  }
+
+  @keyframes nodePulse {
+    0%   { opacity: 0; r: 2; }
+    20%  { opacity: 1; r: 4.5; }
+    50%  { opacity: 0.7; r: 3; }
+    80%  { opacity: 1; r: 4.5; }
+    100% { opacity: 0; r: 2; }
+  }
+
+  /* ── Main content ── */
   &__content {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 2rem 0;
+    padding: 0 2rem;
+    z-index: 3;
     text-align: center;
-    pointer-events: none;
+
+    /* Stagger entrance */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
+  /* ── Title ── */
   &__title {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
+    margin-bottom: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0;
   }
 
-  // Each line is a flex row of words
-  &__line {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 0.25em;
+  &__title-line {
+    display: block;
   }
 
-  // Each word animates in with blur + fade + slide from left
   &__word {
     display: inline-block;
     color: #ffffff;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
     opacity: 0;
     filter: blur(12px);
-    transform: translateX(-18px);
-    animation: wordReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    transform: translateY(16px);
+    animation: wordReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+    &--1 { animation-delay: 0.2s; }
+    &--2 { animation-delay: 0.35s; }
+    &--3 { animation-delay: 0.5s; }
+
+    /* The golden "journeys," */
+    &--highlight {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(
+        105deg,
+        #fffbe6 0%,
+        #ffd700 30%,
+        #f5a800 60%,
+        #ffe566 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: none;
+      animation:
+        wordReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+        heroShimmer 5s linear infinite;
+      animation-delay: 0.35s, 1.2s;
+      filter: blur(12px) drop-shadow(0 0 20px rgba(245, 197, 24, 0.3));
+    }
   }
 
   @keyframes wordReveal {
     0% {
       opacity: 0;
       filter: blur(12px);
-      transform: translateX(-18px);
+      transform: translateY(16px);
     }
     60% {
       filter: blur(2px);
@@ -101,26 +202,227 @@
     100% {
       opacity: 1;
       filter: blur(0px);
-      transform: translateX(0);
+      transform: translateY(0);
     }
-  }
-
-  // Yellow shimmer on "trips,"
-  &__highlight {
-    background: linear-gradient(100deg, #fffbe6 0%, #ffd700 40%, #f5a800 75%, #ffe566 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation:
-      wordReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards,
-      heroShimmer 5s linear infinite;
-    // shimmer starts after reveal
-    animation-delay: inherit, 1s;
   }
 
   @keyframes heroShimmer {
     0%   { background-position: 0% center; }
     100% { background-position: 200% center; }
+  }
+
+  /* ── Search bar ── */
+  &__search {
+    width: 100%;
+    max-width: 580px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease forwards 0.7s;
+  }
+
+  &__search-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 6px 6px 20px;
+    border-radius: 9999px;
+    background: rgba(12, 12, 16, 0.55);
+    backdrop-filter: blur(24px) saturate(1.3);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus-within {
+      border-color: rgba(245, 197, 24, 0.3);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(245, 197, 24, 0.08),
+        0 0 0 1px rgba(245, 197, 24, 0.1) inset;
+    }
+  }
+
+  &__search-icon {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.2s ease;
+  }
+
+  .hero__search-inner:focus-within .hero__search-icon {
+    color: rgba(245, 197, 24, 0.7);
+  }
+
+  &__search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.32);
+    }
+  }
+
+  &__search-btn {
+    flex-shrink: 0;
+    padding: 10px 26px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease, transform 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.02);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Social proof ── */
+  &__proof {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.7s ease forwards 1s;
+  }
+
+  &__avatars {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(5, 5, 5, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+
+    &:not(:first-child) {
+      margin-left: -10px;
+    }
+
+    &--1 {
+      background: linear-gradient(135deg, #f5c518, #d4a012);
+      z-index: 3;
+    }
+
+    &--2 {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      z-index: 2;
+    }
+
+    &--3 {
+      background: linear-gradient(135deg, #059669, #10b981);
+      z-index: 1;
+    }
+  }
+
+  &__proof-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__proof-main {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+    letter-spacing: -0.01em;
+  }
+
+  &__proof-sub {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.42);
+    letter-spacing: 0;
+  }
+
+  &__star {
+    width: 13px;
+    height: 13px;
+    fill: #f5c518;
+    flex-shrink: 0;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100vh;
+
+    &__title {
+      font-size: clamp(2rem, 8vw, 3rem);
+      margin-bottom: 2rem;
+    }
+
+    &__search {
+      max-width: 90%;
+    }
+
+    &__search-inner {
+      padding: 5px 5px 5px 16px;
+      gap: 8px;
+    }
+
+    &__search-input {
+      font-size: 13px;
+    }
+
+    &__search-btn {
+      padding: 9px 18px;
+      font-size: 12px;
+    }
+
+    &__proof {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__proof-text {
+      align-items: center;
+    }
+
+    &__flight-path {
+      display: none;
+    }
   }
 }
