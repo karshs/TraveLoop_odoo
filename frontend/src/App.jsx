@@ -4,8 +4,10 @@ import { AuthProvider } from './context/AuthContext'
 // Public pages
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
+import HowItWorks from './components/HowItWorks/HowItWorks'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
+import Dashboard from './pages/Dashboard/Dashboard'
 import AuthCallback from './pages/Auth/AuthCallback'
 import BudgetPage from './pages/BudgetPage'
 import PublicTripPage from './pages/PublicTripPage'
@@ -28,22 +30,22 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public */}
           <Route path="/" element={<><Navbar /><Hero /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
 <<<<<<< Updated upstream
 
-          {/* Dashboard — shared Navbar + Sidebar layout */}
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard"  element={<Dashboard />} />
-            <Route path="/trips"      element={<Trips />} />
-            <Route path="/itinerary"  element={<Itinerary />} />
-            <Route path="/budget"     element={<Budget />} />
-            <Route path="/community"  element={<Community />} />
-            <Route path="/profile"    element={<Profile />} />
-          </Route>
+  {/* Dashboard — shared Navbar + Sidebar layout */ }
+  <Route element={<DashboardLayout />}>
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/trips" element={<Trips />} />
+    <Route path="/itinerary" element={<Itinerary />} />
+    <Route path="/budget" element={<Budget />} />
+    <Route path="/community" element={<Community />} />
+    <Route path="/profile" element={<Profile />} />
+  </Route>
 =======
           <Route path="/trips/:tripId/budget" element={<BudgetPage />} />
           <Route path="/shared/:shareToken" element={<PublicTripPage />} />
@@ -52,9 +54,9 @@ const App = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
 >>>>>>> Stashed changes
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+        </Routes >
+      </AuthProvider >
+    </BrowserRouter >
   )
 }
 
