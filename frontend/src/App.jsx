@@ -7,6 +7,12 @@ import Hero from './components/Hero/Hero'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
 import AuthCallback from './pages/Auth/AuthCallback'
+import BudgetPage from './pages/BudgetPage'
+import PublicTripPage from './pages/PublicTripPage'
+import ChecklistPage from './pages/ChecklistPage'
+import NotesPage from './pages/NotesPage'
+import ProfilePage from './pages/ProfilePage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
 
 // Dashboard shell + pages
 import DashboardLayout from './pages/Dashboard/DashboardLayout/Dashboardlayout'
@@ -27,6 +33,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+<<<<<<< Updated upstream
 
           {/* Dashboard — shared Navbar + Sidebar layout */}
           <Route element={<DashboardLayout />}>
@@ -37,6 +44,14 @@ const App = () => {
             <Route path="/community"  element={<Community />} />
             <Route path="/profile"    element={<Profile />} />
           </Route>
+=======
+          <Route path="/trips/:tripId/budget" element={<BudgetPage />} />
+          <Route path="/shared/:shareToken" element={<PublicTripPage />} />
+          <Route path="/trips/:tripId/checklist" element={<ChecklistPage />} />
+          <Route path="/trips/:tripId/notes" element={<NotesPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
+>>>>>>> Stashed changes
         </Routes>
       </AuthProvider>
     </BrowserRouter>

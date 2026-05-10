@@ -1,0 +1,154 @@
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 2rem;
+  h1 { margin: 0; font-size: 2.5rem; }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  @include glassmorphism;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  svg {
+    width: 32px;
+    height: 32px;
+  }
+  .iconUsers { color: #4a90e2; }
+  .iconTrips { color: #50e3c2; }
+  .iconPublic { color: #b8e986; }
+  .iconStops { color: #f5a623; }
+  .iconActs { color: #bd10e0; }
+  .iconNewUsers { color: #34c759; }
+  .iconNewTrips { color: #007aff; }
+
+  .statInfo {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+  }
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tableCard {
+  @include glassmorphism;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th {
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      position: sticky;
+      top: 0;
+    }
+
+    tbody tr {
+      transition: background 0.2s;
+      &:hover {
+        background: rgba(255,255,255,0.03);
+      }
+    }
+  }
+}
+
+.categoryBadge, .statusBadge {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+}
+
+.roleBadge {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-weight: 600;
+
+  &.ADMIN {
+    background: rgba(245, 166, 35, 0.2);
+    color: #f5a623;
+  }
+  &.USER {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 5rem;
+  color: #fff;
+  font-size: 1.2rem;
+}

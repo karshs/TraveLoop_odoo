@@ -1,0 +1,216 @@
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; font-size: 2rem; }
+}
+
+.newBtn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.9; }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  height: calc(100vh - 150px);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
+.listCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+}
+
+.noteCard {
+  @include glassmorphism;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  &.active {
+    border-left-color: #4a90e2;
+    background: rgba(74, 144, 226, 0.1);
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+
+  h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .time {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .deleteBtn {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    &:hover { color: #ff3b30; }
+  }
+}
+
+.badge {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+
+  &.TRIP { background: rgba(74, 144, 226, 0.2); color: #4a90e2; }
+  &.STOP { background: rgba(144, 19, 254, 0.2); color: #9013fe; }
+  &.DAY { background: rgba(52, 199, 89, 0.2); color: #34c759; }
+}
+
+.editorCol {
+  @include glassmorphism;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+
+  .editorHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    select {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: inherit;
+
+      option { background: #1a1a1a; }
+    }
+
+    .saveBtn {
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover { background: #357abd; }
+    }
+  }
+
+  .titleInput {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: inherit;
+
+    &:focus { outline: none; }
+    &::placeholder { color: rgba(255,255,255,0.3); }
+  }
+
+  .contentInput {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    flex: 1;
+    resize: none;
+    font-family: inherit;
+
+    &:focus { outline: none; }
+    &::placeholder { color: rgba(255,255,255,0.3); }
+  }
+}
+
+.emptyState, .emptyList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255,255,255,0.5);
+
+  button {
+    margin-top: 1rem;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 5rem;
+  color: #fff;
+  font-size: 1.2rem;
+}
