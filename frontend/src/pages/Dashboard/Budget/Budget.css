@@ -1,0 +1,22 @@
+.budget-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.budget-cat {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+
+.budget-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.budget-amt { font-size: 0.82rem; font-weight: 600; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; }
+.budget-pct { font-size: 10px; color: rgba(255, 255, 255, 0.3); margin-left: 0.4rem; font-family: 'Bricolage Grotesque', sans-serif; }
+.expense-name { font-size: 0.82rem; font-weight: 500; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; }
+.expense-date { font-size: 10.5px; color: rgba(255, 255, 255, 0.25); font-family: 'Bricolage Grotesque', sans-serif; margin-top: 1px; }
