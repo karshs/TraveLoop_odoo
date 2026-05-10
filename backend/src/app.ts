@@ -8,6 +8,7 @@ import authRoutes from "./features/auth/auth.routes.js";
 import tripRoutes from "./features/trips/trip.routes.js";
 import stopRoutes from "./features/stops/stop.routes.js";
 import stopActivityRoutes from "./features/stop-activities/stop-activity.routes.js";
+import budgetRoutes from "./features/budget/budget.routes.js";
 import cityRoutes from "./features/cities/city.routes.js";
 import activityRoutes from "./features/activities/activity.routes.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
@@ -28,6 +29,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/trips", tripRoutes);
 app.use("/api/v1/trips/:tripId/stops", stopRoutes);
 app.use("/api/v1/stops/:stopId/activities", stopActivityRoutes);
+app.use("/api/v1/trips/:tripId/budget", budgetRoutes);
 
 // Discovery APIs (public)
 app.use("/api/v1/cities", cityRoutes);
