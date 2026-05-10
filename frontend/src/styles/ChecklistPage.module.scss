@@ -1,0 +1,230 @@
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; font-size: 2rem; }
+}
+
+.resetBtn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255,255,255,0.1);
+  }
+}
+
+.progressContainer {
+  @include glassmorphism;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.progressText {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+
+.progressBar {
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+
+  .progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a90e2, #50e3c2);
+    transition: width 0.5s ease;
+  }
+}
+
+.listContainer {
+  margin-bottom: 3rem;
+}
+
+.categoryGroup {
+  margin-bottom: 2rem;
+
+  .categoryHeader {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 0.5rem;
+  }
+}
+
+.itemRow {
+  @include glassmorphism;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+
+  &.packed {
+    opacity: 0.5;
+    
+    .itemLabel {
+      text-decoration: line-through;
+    }
+  }
+
+  .itemLabel {
+    flex: 1;
+    margin-left: 1rem;
+    transition: text-decoration 0.3s;
+  }
+
+  .deleteBtn {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: color 0.2s;
+    &:hover { color: #ff3b30; }
+  }
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  padding-left: 24px;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkmark {
+      background-color: #34c759;
+      border-color: #34c759;
+      animation: flash 0.3s ease;
+
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  .checkmark {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    transition: all 0.2s;
+
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@keyframes flash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 10px rgba(52, 199, 89, 0.5); }
+  100% { transform: scale(1); }
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.1);
+}
+
+.addForm {
+  @include glassmorphism;
+  padding: 1.5rem;
+
+  form {
+    display: flex;
+    gap: 1rem;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+
+    input[type="text"], select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.8rem;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+
+      &:focus { outline: none; border-color: rgba(255,255,255,0.3); }
+      option { background: #1a1a1a; }
+    }
+
+    input[type="text"] { flex: 2; }
+    select { flex: 1; }
+
+    .addBtn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover { opacity: 0.9; }
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 5rem;
+  color: #fff;
+  font-size: 1.2rem;
+}

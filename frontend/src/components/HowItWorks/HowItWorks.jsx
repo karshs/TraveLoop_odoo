@@ -9,7 +9,7 @@ const STEPS = [
     label: 'Quick setup',
     headingStatic: 'Create your account in',
     headingItalic: 'seconds',
-    desc: 'Sign up, set your travel preferences, and you\'re ready to go. No complicated onboarding — just start planning your next adventure immediately.',
+    desc: "Sign up, set your travel preferences, and you're ready to go. No complicated onboarding — just start planning your next adventure immediately.",
     img: img1,
     imgAlt: 'PlannR signup illustration',
     flip: false,
