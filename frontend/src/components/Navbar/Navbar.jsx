@@ -1,27 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.scss';
 
 const NAV_LINKS = [
-  { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Trips',     href: '#trips'      },
-  { label: 'Support',   href: '/support'    },
+  { label: 'How It Works', scrollId: 'how-it-works' },
+  { label: 'Support', route: '/support' },
 ];
 
-function ArrowIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-
 export function Navbar() {
-  const [hidden, setHidden]       = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [activeHash, setActiveHash] = useState('');
-  const lastY    = useRef(0);
+  const lastY = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
@@ -40,12 +31,30 @@ export function Navbar() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, [location]);
 
+  // Scroll to section — navigate home first if not already there
+  const handleScrollLink = (e, scrollId) => {
+    e.preventDefault();
+    const doScroll = () => {
+      const el = document.getElementById(scrollId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    if (location.pathname === '/') {
+      doScroll();
+    } else {
+      navigate('/');
+      // Wait for home page to mount then scroll
+      setTimeout(doScroll, 100);
+    }
+  };
+
   return (
     <nav
       className={`navbar-wrapper${hidden ? ' navbar-wrapper--hidden' : ''}`}
       aria-label="Main navigation"
     >
       <div className="navbar">
+
         {/* Logo */}
         <a href="/" className="navbar-logo" aria-label="PlannR home">
           <span className="navbar-logo-text">PlannR</span>
@@ -53,17 +62,27 @@ export function Navbar() {
 
         {/* Nav links */}
         <ul className="navbar-links" role="list">
-          {NAV_LINKS.map(({ label, href }) => {
-            const isRoute  = href.startsWith('/');
-            const isActive = isRoute
-              ? location.pathname === href
-              : activeHash === href;
+          {NAV_LINKS.map(({ label, scrollId, route }) => {
+            const isActive = route
+              ? location.pathname === route
+              : activeHash === `#${scrollId}`;
 
             return (
               <li key={label}>
-                {isRoute ? (
+                {scrollId ? (
+                  <a
+                    href={`/#${scrollId}`}
+                    className={`navbar-link${isActive ? ' active' : ''}`}
+                    onClick={(e) => handleScrollLink(e, scrollId)}
+                  >
+                    <span className="navbar-link-inner">
+                      <span className="navbar-link-top">{label}</span>
+                      <span className="navbar-link-bottom">{label}</span>
+                    </span>
+                  </a>
+                ) : (
                   <Link
-                    to={href}
+                    to={route}
                     className={`navbar-link${isActive ? ' active' : ''}`}
                   >
                     <span className="navbar-link-inner">
@@ -71,17 +90,6 @@ export function Navbar() {
                       <span className="navbar-link-bottom">{label}</span>
                     </span>
                   </Link>
-                ) : (
-                  <a
-                    href={href}
-                    className={`navbar-link${isActive ? ' active' : ''}`}
-                    aria-current={isActive ? 'true' : undefined}
-                  >
-                    <span className="navbar-link-inner">
-                      <span className="navbar-link-top">{label}</span>
-                      <span className="navbar-link-bottom">{label}</span>
-                    </span>
-                  </a>
                 )}
               </li>
             );
@@ -98,6 +106,7 @@ export function Navbar() {
             Start Planning
           </button>
         </Link>
+
       </div>
     </nav>
   );

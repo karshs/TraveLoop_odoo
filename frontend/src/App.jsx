@@ -45,19 +45,19 @@ const App = () => {
 
           {/* Dashboard — shared Navbar + Sidebar layout */}
           <Route element={<DashboardLayout />}>
-            <Route path="/dashboard"  element={<Dashboard />} />
-            <Route path="/trips"      element={<Trips />} />
-            <Route path="/itinerary"  element={<Itinerary />} />
-            <Route path="/budget"     element={<Budget />} />
-            <Route path="/community"  element={<Community />} />
-            <Route path="/profile"    element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/trips" element={<Trips />} />
+            <Route path="/itinerary" element={<Itinerary />} />
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* Remote new routes */}
-            <Route path="/trips/:tripId/budget"    element={<BudgetPage />} />
+            <Route path="/trips/:tripId/budget" element={<BudgetPage />} />
             <Route path="/trips/:tripId/checklist" element={<ChecklistPage />} />
-            <Route path="/trips/:tripId/notes"     element={<NotesPage />} />
-            <Route path="/profile/settings"        element={<ProfilePage />} />
-            <Route path="/admin"                   element={<AdminDashboardPage />} />
+            <Route path="/trips/:tripId/notes" element={<NotesPage />} />
+            <Route path="/profile/settings" element={<ProfilePage />} />
+            <Route path="/admin" element={<AdminDashboardPage />} />
           </Route>
         </Routes>
       </AuthProvider>
