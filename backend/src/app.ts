@@ -15,7 +15,8 @@ import { errorMiddleware } from "./middleware/error.middleware.js";
 const app: Express = express();
 
 // Middleware stack (order matters)
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
+const allowedOrigins = env.CLIENT_URL.split(',').map(o => o.trim());
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
