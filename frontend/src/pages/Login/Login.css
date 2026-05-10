@@ -205,7 +205,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
   background: rgba(255, 255, 255, 0.94);
   color: #0a0a0a;
   border: none;
@@ -266,10 +265,9 @@
   stroke: #0a0a0a;
   stroke-width: 2.5px;
   fill: none;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Arrow swap animation */
+/* Arrow swap — single row: [icon] [text], icon slides right on hover */
 .auth-btn-arrow-wrap {
   display: flex;
   align-items: center;
@@ -278,34 +276,17 @@
 }
 
 .auth-btn-primary:hover .auth-btn-arrow-wrap {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
+/* hide the duplicate enter arrow entirely */
 .auth-btn-arrow-enter {
-  position: absolute;
-  top: 50%;
-  left: calc(50% - 2.2rem);
-  transform: translateY(-50%) translateX(-16px);
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.auth-btn-primary:hover .auth-btn-arrow-enter {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0px);
+  display: none;
 }
 
 .auth-btn-arrow-exit {
   display: flex;
   align-items: center;
-  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.auth-btn-primary:hover .auth-btn-arrow-exit {
-  opacity: 0;
-  transform: translateX(16px);
 }
 
 /* ── Divider ── */
