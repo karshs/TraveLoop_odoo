@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import heroImg from '../../assets/hero.png'
 import './Hero.scss'
 
@@ -6,9 +7,21 @@ const LINE2 = ['not', 'stressful', 'ones.']
 const HIGHLIGHT_WORD = 'trips,'
 
 const Hero = () => {
+  const [loaded, setLoaded] = useState(false)
+
   return (
     <section className="hero">
-      <img src={heroImg} alt="Hero" className="hero__image" />
+      {!loaded && (
+        <div className="hero__loader">
+          <span className="hero__spinner" />
+        </div>
+      )}
+      <img
+        src={heroImg}
+        alt="Hero"
+        className={`hero__image${loaded ? ' hero__image--loaded' : ''}`}
+        onLoad={() => setLoaded(true)}
+      />
       <div className="hero__content">
         <h1 className="hero__title">
           <span className="hero__line">
