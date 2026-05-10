@@ -3,9 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'Pricing',  href: '#pricing'  },
-  { label: 'Support',  href: '#support'  },
+  { label: 'Dashboard', href: '#dashboard' },
+  { label: 'Trips',     href: '#trips'     },
+  { label: 'Support',   href: '#support'   },
 ];
 
 function ArrowIcon({ className }) {
@@ -79,13 +79,13 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Divider */}
-        <div className="navbar-divider" aria-hidden="true" />
-
         {/* CTA */}
         <Link to="/login" className="navbar-cta-link">
           <button className="navbar-cta" type="button">
-            <ArrowIcon className="navbar-cta-icon" />
+            <svg className="navbar-cta-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
             Get Started
           </button>
         </Link>
