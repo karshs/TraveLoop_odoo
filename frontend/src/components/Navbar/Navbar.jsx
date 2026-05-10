@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const NAV_LINKS = [
-  { label: 'Dashboard', href: '#dashboard' },
-  { label: 'Trips',     href: '#trips'     },
-  { label: 'Support',   href: '#support'   },
+  { label: 'How It Works', href: '#how-it-works', route: null },
+  { label: 'Trips', href: '#trips', route: null },
+  { label: 'Support', href: null, route: '/support' },
 ];
 
 function ArrowIcon({ className }) {
@@ -22,6 +22,7 @@ export function Navbar() {
   const [activeHash, setActiveHash] = useState('');
   const lastY = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Hide on scroll-down, show on scroll-up
   useEffect(() => {
@@ -56,24 +57,39 @@ export function Navbar() {
 
         {/* Nav links */}
         <ul className="navbar-links" role="list">
-          {NAV_LINKS.map(({ label, href }) => {
-            const isActive = activeHash === href;
+          {NAV_LINKS.map(({ label, href, route }) => {
+            const isActive = route
+              ? location.pathname === route
+              : activeHash === href;
             return (
               <li key={label}>
-                <a
-                  href={href}
-                  className={`navbar-link${isActive ? ' active' : ''}`}
-                  aria-current={isActive ? 'true' : undefined}
-                >
-                  {isActive ? (
-                    label
-                  ) : (
+                {route ? (
+                  <Link
+                    to={route}
+                    className={`navbar-link${isActive ? ' active' : ''}`}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
                     <span className="navbar-link-inner">
                       <span className="navbar-link-top">{label}</span>
                       <span className="navbar-link-bottom">{label}</span>
                     </span>
-                  )}
-                </a>
+                  </Link>
+                ) : (
+                  <a
+                    href={href}
+                    className={`navbar-link${isActive ? ' active' : ''}`}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    {isActive ? (
+                      label
+                    ) : (
+                      <span className="navbar-link-inner">
+                        <span className="navbar-link-top">{label}</span>
+                        <span className="navbar-link-bottom">{label}</span>
+                      </span>
+                    )}
+                  </a>
+                )}
               </li>
             );
           })}

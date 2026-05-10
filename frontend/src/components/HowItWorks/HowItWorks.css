@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
+
+/* ── Section ── */
+.hiw {
+    background: #0a0a0a;
+    padding: 100px 2rem 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── Header ── */
+.hiw__header {
+    text-align: center;
+    max-width: 560px;
+    margin-bottom: 72px;
+}
+
+.hiw__label {
+    display: inline-block;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.18);
+    border-radius: 9999px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+}
+
+.hiw__title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    line-height: 1.15;
+    margin: 0 0 16px;
+}
+
+.hiw__subtitle {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ── Grid ── */
+.hiw__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1080px;
+}
+
+/* ── Card ── */
+.hiw__card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    cursor: default;
+}
+
+.hiw__card:hover {
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(255, 215, 0, 0.18);
+    transform: translateY(-4px);
+}
+
+/* ── Card top row ── */
+.hiw__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hiw__number {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255, 215, 0, 0.5);
+}
+
+.hiw__icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 215, 0, 0.07);
+    border: 1px solid rgba(255, 215, 0, 0.14);
+    border-radius: 10px;
+    color: #ffd700;
+    flex-shrink: 0;
+}
+
+.hiw__icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ── Card text ── */
+.hiw__card-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.hiw__card-desc {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13.5px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.42);
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .hiw__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .hiw {
+        padding: 72px 1.25rem 80px;
+    }
+
+    .hiw__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hiw__header {
+        margin-bottom: 48px;
+    }
+}
