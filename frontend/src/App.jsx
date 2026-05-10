@@ -7,7 +7,6 @@ import Hero from './components/Hero/Hero'
 import HowItWorks from './components/HowItWorks/HowItWorks'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
-import Dashboard from './pages/Dashboard/Dashboard'
 import AuthCallback from './pages/Auth/AuthCallback'
 import BudgetPage from './pages/BudgetPage'
 import PublicTripPage from './pages/PublicTripPage'
@@ -33,28 +32,25 @@ const App = () => {
           <Route path="/" element={<><Navbar /><Hero /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
-          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
-<<<<<<< Updated upstream
 
-  {/* Dashboard — shared Navbar + Sidebar layout */ }
-  <Route element={<DashboardLayout />}>
-    <Route path="/dashboard" element={<Dashboard />} />
-    <Route path="/trips" element={<Trips />} />
-    <Route path="/itinerary" element={<Itinerary />} />
-    <Route path="/budget" element={<Budget />} />
-    <Route path="/community" element={<Community />} />
-    <Route path="/profile" element={<Profile />} />
-  </Route>
-=======
+          {/* Dashboard — shared Navbar + Sidebar layout */}
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/trips" element={<Trips />} />
+            <Route path="/itinerary" element={<Itinerary />} />
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+
           <Route path="/trips/:tripId/budget" element={<BudgetPage />} />
           <Route path="/shared/:shareToken" element={<PublicTripPage />} />
           <Route path="/trips/:tripId/checklist" element={<ChecklistPage />} />
           <Route path="/trips/:tripId/notes" element={<NotesPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/user-profile" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
->>>>>>> Stashed changes
-        </Routes >
+        </Routes>
       </AuthProvider >
     </BrowserRouter >
   )
