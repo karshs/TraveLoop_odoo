@@ -175,6 +175,7 @@ model Activity {
   @@index([city_id])
   @@index([category])
   @@index([city_id, category])
+  @@unique([city_id, name])
   @@map("activities")
 }
 

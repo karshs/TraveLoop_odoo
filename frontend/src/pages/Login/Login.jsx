@@ -28,16 +28,17 @@ function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        'https://coveer-backend.onrender.com/auth/login',
-        { email: formData.email, password: formData.password },
-        { withCredentials: true }
+        'http://localhost:5000/api/v1/auth/login',
+        { email: formData.email, password: formData.password }
       );
       if (res.status === 200) {
+        const token = res.data.data.token;
+        localStorage.setItem('token', token);
         const meRes = await axios.get(
-          'https://coveer-backend.onrender.com/auth/me',
-          { withCredentials: true }
+          'http://localhost:5000/api/v1/auth/me',
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        setUser(meRes.data);
+        setUser(meRes.data.data.user);
         navigate('/dashboard');
       }
     } catch (err) {

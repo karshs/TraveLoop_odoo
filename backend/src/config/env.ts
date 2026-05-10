@@ -1,6 +1,9 @@
 // Environment config — validated at startup. App will not run with missing variables.
 
 import { z } from "zod";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const envSchema = z.object({
   NODE_ENV: z

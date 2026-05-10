@@ -58,6 +58,16 @@ export async function loginHandler(req: Request, res: Response): Promise<void> {
 }
 
 // ─────────────────────────────────────────────────────────────
+//  ME HANDLER
+// ─────────────────────────────────────────────────────────────
+
+export async function meHandler(req: Request, res: Response): Promise<void> {
+  // `authenticate` middleware ensures req.user is set
+  const user = req.user;
+  sendSuccess(res, { user }, "User profile retrieved");
+}
+
+// ─────────────────────────────────────────────────────────────
 //  GOOGLE CALLBACK HANDLER
 // ─────────────────────────────────────────────────────────────
 

@@ -181,6 +181,12 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* Optional step circle — dashed border */
+.ob-progress-step-num.optional:not(.active):not(.done) {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 /* Connector line */
 .ob-progress-connector {
   flex: 1;
@@ -631,6 +637,67 @@
   background: rgba(255, 215, 0, 0.06);
 }
 
+/* ── Skip button (step 3) ── */
+.ob-skip-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  padding: 0.4rem 0;
+  margin-top: 0.1rem;
+  text-align: center;
+  transition: color 0.2s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.1);
+}
+
+.ob-skip-btn:hover {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration-color: rgba(255, 255, 255, 0.25);
+}
+
+.ob-skip-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Optional nudge banner (step 3) ── */
+.ob-optional-nudge {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: 12px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(255, 215, 0, 0.6);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  animation: obFadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.ob-nudge-icon {
+  flex-shrink: 0;
+  color: rgba(255, 215, 0, 0.55);
+  width: 13px;
+  height: 13px;
+}
+
+/* ── Eyebrow optional tag ── */
+.ob-eyebrow-optional {
+  color: rgba(255, 215, 0, 0.4);
+  font-style: italic;
+  font-weight: 500;
+}
+
 /* ── Success state ── */
 .ob-success {
   display: flex;
@@ -675,6 +742,48 @@
   color: rgba(255, 255, 255, 0.32);
   letter-spacing: -0.01em;
   max-width: 280px;
+}
+
+/* ── Post-success first-trip CTA (shown when step 3 was skipped) ── */
+.ob-success-cta {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 320px;
+  background: rgba(255, 215, 0, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.14);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  animation: obFadeUp 0.5s 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.ob-success-cta-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.45);
+  margin-bottom: 0.1rem;
+}
+
+.ob-success-cta-text {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+  max-width: 230px;
+}
+
+.ob-success-cta-btn {
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 200px;
+  height: 38px;
+  font-size: 11.5px;
 }
 
 /* ── Responsive ── */

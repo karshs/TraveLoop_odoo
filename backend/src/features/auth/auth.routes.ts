@@ -5,8 +5,10 @@ import passport from "../../config/passport.js";
 import {
   signupHandler,
   loginHandler,
+  meHandler,
   googleCallbackHandler,
 } from "./auth.controller.js";
+import { authenticate } from "../../middleware/auth.middleware.js";
 
 const router = Router();
 
@@ -15,6 +17,9 @@ router.post("/signup", signupHandler);
 
 // POST /login
 router.post("/login", loginHandler);
+
+// GET /me
+router.get("/me", authenticate, meHandler);
 
 // GET /google — initiates Google OAuth flow
 router.get(

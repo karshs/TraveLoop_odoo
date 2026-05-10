@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
+import Dashboard from './pages/Dashboard/Dashboard'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/" element={<><Navbar /><Hero /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

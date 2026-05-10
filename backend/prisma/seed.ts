@@ -188,21 +188,27 @@ async function main() {
     const city = createdCities.find((c) => c.slug === citySlug);
     if (city) {
       await Promise.all(
-        activities.map((activity) =>
-          prisma.activity.upsert({
+        activities.map(async (activity) => {
+          const existing = await prisma.activity.findFirst({
             where: {
-              city_id_name: {
-                city_id: city.id,
-                name: activity.name,
-              },
-            },
-            update: activity,
-            create: {
-              ...activity,
               city_id: city.id,
+              name: activity.name,
             },
-          }),
-        ),
+          });
+          if (existing) {
+            return prisma.activity.update({
+              where: { id: existing.id },
+              data: activity,
+            });
+          } else {
+            return prisma.activity.create({
+              data: {
+                ...activity,
+                city_id: city.id,
+              },
+            });
+          }
+        }),
       );
       console.log(
         `✅ Created ${activities.length} activities for ${city.name}`,

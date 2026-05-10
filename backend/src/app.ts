@@ -8,6 +8,8 @@ import authRoutes from "./features/auth/auth.routes.js";
 import tripRoutes from "./features/trips/trip.routes.js";
 import stopRoutes from "./features/stops/stop.routes.js";
 import stopActivityRoutes from "./features/stop-activities/stop-activity.routes.js";
+import cityRoutes from "./features/cities/city.routes.js";
+import activityRoutes from "./features/activities/activity.routes.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
 
 const app: Express = express();
@@ -25,6 +27,10 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/trips", tripRoutes);
 app.use("/api/v1/trips/:tripId/stops", stopRoutes);
 app.use("/api/v1/stops/:stopId/activities", stopActivityRoutes);
+
+// Discovery APIs (public)
+app.use("/api/v1/cities", cityRoutes);
+app.use("/api/v1/activities", activityRoutes);
 
 // Health check
 app.get("/api/v1/health", (req: Request, res: Response) => {

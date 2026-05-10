@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   User, Mail, Lock, Phone, Globe, Calendar,
-  MapPin, Eye, EyeOff, Link2, ChevronDown,
+  MapPin, Eye, EyeOff, Link2, ChevronDown, Sparkles,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,6 +36,7 @@ function CheckIcon() {
 }
 
 // ─── Step config ─────────────────────────────────────────────
+// Step 3 is now optional — label reflects that
 const STEP_LABELS = ['Account', 'Profile', 'First Trip'];
 const TOTAL_STEPS = STEP_LABELS.length;
 
@@ -226,18 +227,25 @@ function Step2({ data, onChange, errors }) {
   );
 }
 
+// ─── Step 3 — now fully optional ─────────────────────────────
 function Step3({ data, onChange, errors }) {
   const [focused, setFocused] = useState('');
 
   return (
     <div className="ob-step">
       <div className="ob-step-header">
-        <p className="ob-step-eyebrow">Step 3 of {TOTAL_STEPS}</p>
+        <p className="ob-step-eyebrow">Step 3 of {TOTAL_STEPS} · <span className="ob-eyebrow-optional">Optional</span></p>
         <h2 className="ob-step-title">Plan your first trip</h2>
-        <p className="ob-step-sub">You can fill in the details later — just give it a name.</p>
+        <p className="ob-step-sub">Skip this now and plan a trip any time from your dashboard.</p>
       </div>
       <div className="ob-fields">
-        <Field label="Trip title" error={errors.tripTitle}>
+        {/* Optional nudge banner */}
+        <div className="ob-optional-nudge">
+          <Sparkles size={13} className="ob-nudge-icon" />
+          <span>You can always add a trip later — your account is ready either way.</span>
+        </div>
+
+        <Field label="Trip title" optional error={errors.tripTitle}>
           <InputWrap focused={focused === 'tripTitle'} error={errors.tripTitle} icon={MapPin}>
             <input
               className="ob-input"
@@ -297,14 +305,39 @@ function Step3({ data, onChange, errors }) {
   );
 }
 
-function StepSuccess() {
+// ─── Success screen — adapts copy based on whether trip was created ──
+function StepSuccess({ tripCreated }) {
+  const navigate = useNavigate();
+
   return (
     <div className="ob-success">
       <div className="ob-success-icon">
         <CheckIcon />
       </div>
       <h2 className="ob-success-title">You're all set!</h2>
-      <p className="ob-success-sub">Your account and first trip have been created. Let's start exploring.</p>
+      <p className="ob-success-sub">
+        {tripCreated
+          ? 'Your account and first trip are ready. Time to start exploring.'
+          : 'Your account is ready. You can plan your first trip any time.'}
+      </p>
+
+      {/* First-trip CTA — only shown when user skipped step 3 */}
+      {!tripCreated && (
+        <div className="ob-success-cta">
+          <p className="ob-success-cta-eyebrow">Ready to go?</p>
+          <p className="ob-success-cta-text">
+            Plan your first trip from the dashboard — it only takes a minute.
+          </p>
+          <button
+            className="ob-btn-primary ob-success-cta-btn"
+            type="button"
+            onClick={() => navigate('/dashboard')}
+          >
+            <ArrowRight />
+            Plan a Trip
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -324,18 +357,17 @@ function validate(step, data) {
     if (!data.email.trim() || !/\S+@\S+\.\S+/.test(data.email)) errors.email = 'Valid email required';
     if (data.password.length < 8) errors.password = 'Minimum 8 characters';
   }
-  if (step === 2) {
-    if (!data.tripTitle.trim()) errors.tripTitle = 'Give your trip a name';
-  }
+  // Step 2 (index) — trip title is now OPTIONAL; no validation required
   return errors;
 }
 
 export function Onboarding() {
-  const [step, setStep]       = useState(0);
-  const [data, setData]       = useState(INITIAL_DATA);
-  const [errors, setErrors]   = useState({});
-  const [loading, setLoading] = useState(false);
-  const [done, setDone]       = useState(false);
+  const [step, setStep]           = useState(0);
+  const [data, setData]           = useState(INITIAL_DATA);
+  const [errors, setErrors]       = useState({});
+  const [loading, setLoading]     = useState(false);
+  const [done, setDone]           = useState(false);
+  const [tripCreated, setTripCreated] = useState(false);
 
   const navigate    = useNavigate();
   const { setUser } = useAuth();
@@ -345,6 +377,69 @@ export function Onboarding() {
     setErrors(prev => ({ ...prev, [key]: undefined }));
   };
 
+  // ── Submit (called on final step's "Get Started") ────────────
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      // 1. Register
+      const signupRes = await axios.post(
+        'http://localhost:5000/api/v1/auth/signup',
+        {
+          firstName:     data.firstName,
+          lastName:      data.lastName,
+          email:         data.email,
+          password:      data.password,
+          phone:         data.phone || undefined,
+          age:           data.age ? parseInt(data.age) : undefined,
+          language_pref: data.language_pref,
+        }
+      );
+      
+      // Extract token and configure auth header
+      const token = signupRes.data.data.token;
+      localStorage.setItem('token', token);
+      const authConfig = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+
+      // 2. Hydrate auth context
+      const meRes = await axios.get(
+        'http://localhost:5000/api/v1/auth/me',
+        authConfig
+      );
+      setUser(meRes.data.data.user);
+
+      // 3. Optionally create first trip — only if title was provided
+      let didCreateTrip = false;
+      if (data.tripTitle.trim()) {
+        await axios.post(
+          'http://localhost:5000/api/v1/trips',
+          {
+            title:      data.tripTitle,
+            start_date: data.startDate || undefined,
+            end_date:   data.endDate   || undefined,
+            visibility: data.tripVisibility,
+            status:     'DRAFT',
+          },
+          authConfig
+        );
+        didCreateTrip = true;
+      }
+
+      setTripCreated(didCreateTrip);
+      setDone(true);
+
+      // Auto-redirect after success animation
+      setTimeout(() => navigate('/dashboard'), 2200);
+    } catch (err) {
+      const msg = err.response?.data?.message || 'Something went wrong. Please try again.';
+      setErrors({ submit: msg });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ── Next / Continue ──────────────────────────────────────────
   const handleNext = async () => {
     const errs = validate(step, data);
     if (Object.keys(errs).length) { setErrors(errs); return; }
@@ -355,57 +450,15 @@ export function Onboarding() {
       return;
     }
 
-    // Final submit
-    setLoading(true);
-    try {
-      await axios.post(
-        'https://coveer-backend.onrender.com/auth/register',
-        {
-          firstName:     data.firstName,
-          lastName:      data.lastName,
-          email:         data.email,
-          password:      data.password,
-          phone:         data.phone || undefined,
-          age:           data.age ? parseInt(data.age) : undefined,
-          language_pref: data.language_pref,
-        },
-        { withCredentials: true }
-      );
+    // Last step — run submit
+    await handleSubmit();
+  };
 
-      await axios.post(
-        'https://coveer-backend.onrender.com/auth/login',
-        { email: data.email, password: data.password },
-        { withCredentials: true }
-      );
-
-      const meRes = await axios.get(
-        'https://coveer-backend.onrender.com/auth/me',
-        { withCredentials: true }
-      );
-      setUser(meRes.data);
-
-      if (data.tripTitle.trim()) {
-        await axios.post(
-          'https://coveer-backend.onrender.com/trips',
-          {
-            title:      data.tripTitle,
-            start_date: data.startDate || undefined,
-            end_date:   data.endDate   || undefined,
-            visibility: data.tripVisibility,
-            status:     'DRAFT',
-          },
-          { withCredentials: true }
-        );
-      }
-
-      setDone(true);
-      setTimeout(() => navigate('/dashboard'), 1800);
-    } catch (err) {
-      const msg = err.response?.data?.message || 'Something went wrong. Please try again.';
-      setErrors({ submit: msg });
-    } finally {
-      setLoading(false);
-    }
+  // ── Skip (only available on step 3) ─────────────────────────
+  const handleSkip = async () => {
+    // Clear any trip data so it's treated as "skipped"
+    setData(prev => ({ ...prev, tripTitle: '', startDate: '', endDate: '' }));
+    await handleSubmit();
   };
 
   return (
@@ -436,7 +489,7 @@ export function Onboarding() {
             <div className="ob-progress-circles">
               {STEP_LABELS.map((label, i) => (
                 <div key={label} className="ob-progress-circle-wrap">
-                  <div className={`ob-progress-step-num${i === step ? ' active' : i < step ? ' done' : ''}`}>
+                  <div className={`ob-progress-step-num${i === step ? ' active' : i < step ? ' done' : ''}${i === 2 ? ' optional' : ''}`}>
                     {i + 1}
                   </div>
                   {i < STEP_LABELS.length - 1 && (
@@ -452,7 +505,7 @@ export function Onboarding() {
                   key={label}
                   className={`ob-progress-label${i === step ? ' active' : i < step ? ' done' : ''}`}
                 >
-                  {label}
+                  {label}{i === 2 ? ' *' : ''}
                 </span>
               ))}
             </div>
@@ -461,7 +514,7 @@ export function Onboarding() {
 
         {/* Step content */}
         {done ? (
-          <StepSuccess />
+          <StepSuccess tripCreated={tripCreated} />
         ) : (
           <>
             {step === 0 && <Step1 data={data} onChange={onChange} errors={errors} />}
@@ -492,6 +545,18 @@ export function Onboarding() {
                 {loading ? 'Creating…' : step === TOTAL_STEPS - 1 ? 'Get Started' : 'Continue'}
               </button>
             </div>
+
+            {/* Skip link — only on the optional step 3 */}
+            {step === TOTAL_STEPS - 1 && !loading && (
+              <button
+                className="ob-skip-btn"
+                type="button"
+                onClick={handleSkip}
+                disabled={loading}
+              >
+                Skip for now — I'll plan later
+              </button>
+            )}
 
             {/* Google OAuth — only on step 0 */}
             {step === 0 && (
