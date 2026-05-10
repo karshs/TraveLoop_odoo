@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext'
 // Public pages
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
+import HowItWorks from './components/HowItWorks/HowItWorks'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
 import AuthCallback from './pages/Auth/AuthCallback'
@@ -23,7 +24,7 @@ const App = () => {
       <AuthProvider>
         <Routes>
           {/* Public */}
-          <Route path="/" element={<><Navbar /><Hero /></>} />
+          <Route path="/" element={<><Navbar /><Hero /><HowItWorks /></>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
           <Route path="/auth/callback" element={<AuthCallback />} />

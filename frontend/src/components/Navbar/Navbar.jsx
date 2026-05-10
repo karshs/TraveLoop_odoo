@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navbar.scss";
 
 const NAV_LINKS = [
-  { label: "Dashboard", href: "#dashboard" },
+  { label: "Dashboard", href: "/dashboard" },
   { label: "Trips", href: "#trips" },
   { label: "Support", href: "#support" },
 ];
@@ -56,23 +56,34 @@ export function Navbar() {
         {/* Nav links */}
         <ul className="navbar-links" role="list">
           {NAV_LINKS.map(({ label, href }) => {
-            const isActive = activeHash === href;
+            const isRoute = href.startsWith('/');
+            const isActive = isRoute
+              ? location.pathname === href
+              : activeHash === href;
             return (
               <li key={label}>
-                <a
-                  href={href}
-                  className={`navbar-link${isActive ? " active" : ""}`}
-                  aria-current={isActive ? "true" : undefined}
-                >
-                  {isActive ? (
-                    label
-                  ) : (
+                {isRoute ? (
+                  <Link
+                    to={href}
+                    className={`navbar-link${isActive ? " active" : ""}`}
+                  >
                     <span className="navbar-link-inner">
                       <span className="navbar-link-top">{label}</span>
                       <span className="navbar-link-bottom">{label}</span>
                     </span>
-                  )}
-                </a>
+                  </Link>
+                ) : (
+                  <a
+                    href={href}
+                    className={`navbar-link${isActive ? " active" : ""}`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    <span className="navbar-link-inner">
+                      <span className="navbar-link-top">{label}</span>
+                      <span className="navbar-link-bottom">{label}</span>
+                    </span>
+                  </a>
+                )}
               </li>
             );
           })}
