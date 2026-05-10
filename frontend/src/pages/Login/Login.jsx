@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [focused, setFocused]   = useState('');
@@ -28,14 +30,14 @@ function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/v1/auth/login',
+        `${API}/auth/login`,
         { email: formData.email, password: formData.password }
       );
       if (res.status === 200) {
         const token = res.data.data.token;
         localStorage.setItem('token', token);
         const meRes = await axios.get(
-          'http://localhost:5000/api/v1/auth/me',
+          `${API}/auth/me`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setUser(meRes.data.data.user);
@@ -46,6 +48,10 @@ function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${API}/auth/google`;
   };
 
   return (
@@ -130,7 +136,7 @@ function Login() {
         </div>
 
         {/* Google */}
-        <button className="auth-btn-google" type="button">
+        <button className="auth-btn-google" type="button" onClick={handleGoogleLogin}>
           <svg className="auth-google-icon" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
