@@ -8,6 +8,8 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Onboarding.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 // ─── Shared SVG icons ────────────────────────────────────────
 function ArrowRight() {
   return (
@@ -372,6 +374,10 @@ export function Onboarding() {
   const navigate    = useNavigate();
   const { setUser } = useAuth();
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${API}/auth/google`;
+  };
+
   const onChange = (key, value) => {
     setData(prev => ({ ...prev, [key]: value }));
     setErrors(prev => ({ ...prev, [key]: undefined }));
@@ -383,7 +389,7 @@ export function Onboarding() {
     try {
       // 1. Register
       const signupRes = await axios.post(
-        'http://localhost:5000/api/v1/auth/signup',
+        `${API}/auth/signup`,
         {
           firstName:     data.firstName,
           lastName:      data.lastName,
@@ -404,7 +410,7 @@ export function Onboarding() {
 
       // 2. Hydrate auth context
       const meRes = await axios.get(
-        'http://localhost:5000/api/v1/auth/me',
+        `${API}/auth/me`,
         authConfig
       );
       setUser(meRes.data.data.user);
@@ -413,7 +419,7 @@ export function Onboarding() {
       let didCreateTrip = false;
       if (data.tripTitle.trim()) {
         await axios.post(
-          'http://localhost:5000/api/v1/trips',
+          `${API}/trips`,
           {
             title:      data.tripTitle,
             start_date: data.startDate || undefined,
@@ -566,7 +572,7 @@ export function Onboarding() {
                   <span className="ob-divider-text">Or sign up with</span>
                   <span className="ob-divider-line" />
                 </div>
-                <button className="ob-btn-google" type="button">
+                <button className="ob-btn-google" type="button" onClick={handleGoogleLogin}>
                   <svg className="ob-google-icon" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>

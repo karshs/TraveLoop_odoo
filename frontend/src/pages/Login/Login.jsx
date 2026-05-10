@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [focused, setFocused]   = useState('');
@@ -28,14 +30,14 @@ function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/v1/auth/login',
+        `${API}/auth/login`,
         { email: formData.email, password: formData.password }
       );
       if (res.status === 200) {
         const token = res.data.data.token;
         localStorage.setItem('token', token);
         const meRes = await axios.get(
-          'http://localhost:5000/api/v1/auth/me',
+          `${API}/auth/me`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setUser(meRes.data.data.user);
@@ -49,7 +51,7 @@ function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:5000/api/v1/auth/google';
+    window.location.href = `${API}/auth/google`;
   };
 
   return (

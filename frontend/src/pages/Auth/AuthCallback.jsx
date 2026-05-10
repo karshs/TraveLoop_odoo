@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
+const API = import.meta.env.VITE_API_URL;
+
 const AuthCallback = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ const AuthCallback = () => {
           localStorage.setItem('token', token);
 
           // 2. Fetch user profile
-          const res = await axios.get('http://localhost:5000/api/v1/auth/me', {
+          const res = await axios.get(`${API}/auth/me`, {
             headers: { Authorization: `Bearer ${token}` }
           });
 
