@@ -67,7 +67,7 @@ export async function googleCallbackHandler(
 ): Promise<void> {
   try {
     // Extract profile from Passport middleware
-    const profile = (req as any).user;
+    const profile = req.user;
 
     // Call oauth service to translate profile and get JWT
     const token = await handleGoogleCallback(profile);

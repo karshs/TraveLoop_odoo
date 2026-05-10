@@ -10,7 +10,7 @@ export interface JWTPayload {
 }
 
 export function signJWT(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as any);
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as jwt.SignOptions);
 }
 
 // Simpler API: sign token with just user ID
