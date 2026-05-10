@@ -5,7 +5,7 @@ import './Navbar.scss';
 const NAV_LINKS = [
   { label: 'Dashboard', href: '/dashboard' },
   { label: 'Trips',     href: '#trips'      },
-  { label: 'Support',   href: '#support'    },
+  { label: 'Support',   href: '/support'    },
 ];
 
 function ArrowIcon({ className }) {
