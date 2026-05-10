@@ -1,0 +1,643 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
+
+.ob-container {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0a0a0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+}
+
+/* Ambient glows */
+.ob-glow {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 560px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ob-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 200px;
+  background: radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Card ── */
+.ob-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Brand ── */
+.ob-brand {
+  text-align: center;
+  margin-bottom: 1rem;
+  animation: obFadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.ob-brand-sub {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.1rem;
+}
+
+.ob-brand-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  background: linear-gradient(105deg, #fff9d6 0%, #ffd700 35%, #f5a800 70%, #ffe566 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Step progress ── */
+.ob-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.25rem;
+  animation: obFadeUp 0.5s 0.05s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Row 1: circles + connectors */
+.ob-progress-circles {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ob-progress-circle-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.ob-progress-circle-wrap:last-child {
+  flex: 0;
+}
+
+.ob-progress-step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.ob-progress-step-num.active {
+  border-color: rgba(255, 215, 0, 0.7);
+  color: rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+.ob-progress-step-num.done {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Connector line */
+.ob-progress-connector {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.ob-progress-connector.done {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Row 2: labels */
+.ob-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ob-progress-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.ob-progress-label.active { color: rgba(255, 215, 0, 0.85); }
+.ob-progress-label.done   { color: rgba(255, 255, 255, 0.35); }
+
+/* ── Step panel ── */
+.ob-step {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: obFadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes obFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ob-step-header { margin-bottom: 0.85rem; }
+
+.ob-step-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 215, 0, 0.55);
+  margin-bottom: 0.2rem;
+}
+
+.ob-step-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.1;
+}
+
+.ob-step-sub {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.32);
+  margin-top: 0.2rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Fields ── */
+.ob-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.ob-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+/* Input pill */
+.ob-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(16, 16, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9999px;
+  padding: 0 1.25rem;
+  height: 42px;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ob-input-wrap:hover { border-color: rgba(255, 255, 255, 0.14); }
+
+.ob-input-wrap.focused {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.03);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.06);
+}
+
+.ob-input-wrap.error {
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.06);
+}
+
+.ob-input-icon {
+  width: 15px;
+  height: 15px;
+  color: rgba(255, 255, 255, 0.28);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.ob-input-wrap.focused .ob-input-icon { color: rgba(255, 215, 0, 0.55); }
+
+.ob-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.01em;
+  min-width: 0;
+}
+
+.ob-input::placeholder { color: rgba(255, 255, 255, 0.22); }
+
+/* Select pill */
+.ob-select {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 0;
+}
+
+.ob-select option {
+  background: #16161c;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ob-select-chevron {
+  width: 14px;
+  height: 14px;
+  color: rgba(255, 255, 255, 0.28);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* ── Visibility pill toggle ── */
+.ob-visibility-group {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.ob-visibility-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(16, 16, 20, 0.8);
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ob-visibility-pill:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ob-visibility-pill.selected {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.06);
+  color: rgba(255, 215, 0, 0.85);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.06);
+}
+
+.ob-visibility-icon { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ── Field label ── */
+.ob-field-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  margin-bottom: 0.4rem;
+  padding-left: 0.25rem;
+}
+
+.ob-field { display: flex; flex-direction: column; }
+
+.ob-optional {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  margin-left: 0.4rem;
+}
+
+/* ── Error text ── */
+.ob-error {
+  font-size: 0.78rem;
+  color: rgba(248, 113, 113, 0.85);
+  padding: 0.2rem 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Actions row ── */
+.ob-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* Back button */
+.ob-btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(16, 16, 20, 0.8);
+  color: rgba(255, 255, 255, 0.45);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ob-btn-back:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ob-btn-back:active { transform: scale(0.98); }
+
+.ob-btn-back-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 2.5px;
+  fill: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ob-btn-back:hover .ob-btn-back-icon { transform: translateX(-3px); }
+
+/* Primary / Next button */
+.ob-btn-primary {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 42px;
+  border-radius: 9999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.94);
+  color: #0a0a0a;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 20px rgba(255, 210, 60, 0.15);
+}
+
+.ob-btn-primary:hover {
+  background: #ffffff;
+  transform: scale(1.01);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0 28px rgba(255, 210, 60, 0.28);
+}
+
+.ob-btn-primary:active { transform: scale(0.98); }
+
+.ob-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Shimmer sweep */
+.ob-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  animation: cta-sweep 3.5s ease-in-out infinite;
+}
+
+@keyframes cta-sweep {
+  0%, 65%, 100% { left: -60%; opacity: 0; }
+  40%           { left: 130%; opacity: 1; }
+}
+
+.ob-btn-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  stroke: #0a0a0a;
+  stroke-width: 2.5px;
+  fill: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ob-btn-primary:hover .ob-btn-icon { transform: translateX(3px); }
+
+/* ── Google button ── */
+.ob-btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: rgba(16, 16, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9999px;
+  height: 42px;
+  padding: 0 1.5rem;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ob-btn-google:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+}
+
+.ob-btn-google:active { transform: scale(0.98); }
+.ob-google-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ── Divider ── */
+.ob-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0.75rem 0;
+}
+
+.ob-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ob-divider-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
+  white-space: nowrap;
+}
+
+/* ── Footer ── */
+.ob-footer {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ob-link-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.ob-link-btn:hover {
+  color: rgba(255, 215, 0, 0.85);
+  background: rgba(255, 215, 0, 0.06);
+}
+
+/* ── Success state ── */
+.ob-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  animation: obFadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  padding: 1rem 0;
+}
+
+.ob-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.15);
+}
+
+.ob-success-check {
+  width: 22px;
+  height: 22px;
+  stroke: #ffd700;
+  stroke-width: 2.5px;
+  fill: none;
+}
+
+.ob-success-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ob-success-sub {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.32);
+  letter-spacing: -0.01em;
+  max-width: 280px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .ob-card      { max-width: 100%; }
+  .ob-brand-name { font-size: 1.6rem; }
+  .ob-row       { grid-template-columns: 1fr; }
+  .ob-step-title { font-size: 1.3rem; }
+}
