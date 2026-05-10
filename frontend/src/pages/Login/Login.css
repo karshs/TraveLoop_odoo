@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap');
 
-/* ── Base ── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,7 +9,7 @@
 .auth-container {
   min-height: 100vh;
   width: 100vw;
-  background-color: #0a0a0a;
+  background-color: #0a0a0c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,20 +19,19 @@
   padding: 1.5rem;
 }
 
-/* Ambient radial glow — yellow tint */
+/* Ambient glow */
 .auth-glow {
   position: absolute;
-  top: 40%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 500px;
-  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+  width: 640px;
+  height: 520px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.07) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Bottom yellow glow */
 .auth-container::after {
   content: '';
   position: absolute;
@@ -42,9 +40,38 @@
   transform: translateX(-50%);
   width: 500px;
   height: 180px;
-  background: radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse at bottom, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
+}
+
+/* ── Back to home button ── */
+.auth-back-btn {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9999px;
+  padding: 0.4rem 0.9rem;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  z-index: 10;
+}
+
+.auth-back-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* ── Card ── */
@@ -52,41 +79,39 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
-  animation: authFadeIn 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: authFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes authFadeIn {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0);    }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Brand ── */
 .auth-brand {
   text-align: center;
-  margin-bottom: 2.25rem;
-  animation: authFadeIn 0.55s 0.05s cubic-bezier(0.4, 0, 0.2, 1) both;
+  margin-bottom: 2.5rem;
+  animation: authFadeIn 0.5s 0.05s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .auth-brand-sub {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   letter-spacing: -0.01em;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
 }
 
-/* Yellow shimmer on brand name */
 .auth-brand-name {
-  font-size: 2.75rem;
-  font-weight: 300;
-  letter-spacing: -0.045em;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
   line-height: 1;
-  background: linear-gradient(100deg, #fffbe6 0%, #ffd700 40%, #f5a800 75%, #ffe566 100%);
+  background: linear-gradient(105deg, #fff9d6 0%, #ffd700 35%, #f5a800 70%, #ffe566 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -95,7 +120,7 @@
 }
 
 @keyframes shimmer {
-  0%   { background-position: 0%   center; }
+  0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
 
@@ -104,32 +129,46 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  animation: authFadeIn 0.55s 0.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  gap: 0.65rem;
+  animation: authFadeIn 0.5s 0.1s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+/* Input pill — matches navbar pill style */
 .auth-input-wrap {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(16, 16, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 9999px;
-  padding: 0.75rem 1.25rem;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  padding: 0 1.25rem;
+  height: 48px;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Yellow focus ring */
+.auth-input-wrap:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(22, 22, 28, 0.85);
+}
+
 .auth-input-wrap.focused {
-  border-color: rgba(255, 215, 0, 0.45);
-  background: rgba(255, 215, 0, 0.04);
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.03);
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.06);
 }
 
 .auth-input-icon {
-  width: 1rem;
-  height: 1rem;
-  color: rgba(255, 255, 255, 0.3);
+  width: 15px;
+  height: 15px;
+  color: rgba(255, 255, 255, 0.28);
   flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.auth-input-wrap.focused .auth-input-icon {
+  color: rgba(255, 215, 0, 0.55);
 }
 
 .auth-input {
@@ -138,52 +177,99 @@
   border: none;
   outline: none;
   font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: -0.01em;
 }
 
 .auth-input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.22);
 }
 
-/* ── Primary button ── */
+/* ── Error ── */
+.auth-error {
+  font-size: 0.8rem;
+  color: rgba(248, 113, 113, 0.9);
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Primary button — matches navbar CTA ── */
 .auth-btn-primary {
   width: 100%;
+  margin-top: 0.25rem;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background: #ffffff;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.94);
   color: #0a0a0a;
   border: none;
   border-radius: 9999px;
-  padding: 0.85rem 1.875rem;
+  height: 48px;
   font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 20px rgba(255, 210, 60, 0.15);
 }
 
 .auth-btn-primary:hover {
-  background: #f5f5f5;
-  box-shadow: 0 0 28px 4px rgba(255, 215, 0, 0.1);
-}
-
-.auth-btn-primary:hover .auth-btn-arrow-wrap {
-  transform: translateX(3px);
+  background: #ffffff;
+  transform: scale(1.01);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0 28px rgba(255, 210, 60, 0.28);
 }
 
 .auth-btn-primary:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
-/* Arrow swap */
+.auth-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Shimmer sweep — same as navbar CTA */
+.auth-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg);
+  animation: cta-sweep 3.5s ease-in-out infinite;
+}
+
+@keyframes cta-sweep {
+  0%, 65%, 100% { left: -60%; opacity: 0; }
+  40% { left: 130%; opacity: 1; }
+}
+
+.auth-btn-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  stroke: #0a0a0a;
+  stroke-width: 2.5px;
+  fill: none;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Arrow swap animation */
 .auth-btn-arrow-wrap {
   display: flex;
   align-items: center;
@@ -191,10 +277,14 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.auth-btn-primary:hover .auth-btn-arrow-wrap {
+  transform: translateX(3px);
+}
+
 .auth-btn-arrow-enter {
   position: absolute;
   top: 50%;
-  left: calc(50% - 2.15rem);
+  left: calc(50% - 2.2rem);
   transform: translateY(-50%) translateX(-16px);
   opacity: 0;
   display: flex;
@@ -218,20 +308,14 @@
   transform: translateX(16px);
 }
 
-.auth-btn-icon {
-  width: 0.9rem;
-  height: 0.9rem;
-  flex-shrink: 0;
-}
-
 /* ── Divider ── */
 .auth-divider {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  margin: 1.5rem 0 1rem;
-  animation: authFadeIn 0.55s 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+  margin: 1.5rem 0 0.85rem;
+  animation: authFadeIn 0.5s 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .auth-divider-line {
@@ -241,45 +325,52 @@
 }
 
 .auth-divider-text {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.28);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.22);
   white-space: nowrap;
-  letter-spacing: 0.02em;
 }
 
-/* ── Google button ── */
+/* ── Google button — matches navbar pill style ── */
 .auth-btn-google {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(16, 16, 20, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 9999px;
-  padding: 0.8rem 1.5rem;
+  height: 48px;
+  padding: 0 1.5rem;
   font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-  animation: authFadeIn 0.55s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+  animation: authFadeIn 0.5s 0.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .auth-btn-google:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.85);
   transform: translateY(-1px);
 }
 
 .auth-btn-google:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .auth-google-icon {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
 }
 
@@ -287,60 +378,59 @@
 .auth-separator {
   width: 100%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
   margin: 1.5rem 0 1.25rem;
-  animation: authFadeIn 0.55s 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: authFadeIn 0.5s 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* ── Bottom links ── */
+/* ── Footer links ── */
+.auth-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: authFadeIn 0.5s 0.25s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 .auth-link-btn {
   background: transparent;
   border: none;
   font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  transition: color 0.2s ease;
-  margin-top: 1.5rem;
-  animation: authFadeIn 0.55s 0.28s cubic-bezier(0.4, 0, 0.2, 1) both;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
 .auth-link-btn:hover {
-  color: #ffd700;
+  color: rgba(255, 215, 0, 0.85);
+  background: rgba(255, 215, 0, 0.06);
 }
 
 .auth-footnote {
-  margin-top: 0.65rem;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.22);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: color 0.2s ease;
-  animation: authFadeIn 0.55s 0.32s cubic-bezier(0.4, 0, 0.2, 1) both;
+  background: none;
+  border: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 .auth-footnote:hover {
-  color: rgba(255, 215, 0, 0.6);
-}
-
-/* ── Error ── */
-.auth-error {
-  font-size: 0.82rem;
-  color: #f87171;
-  text-align: center;
-  padding: 0.4rem 0;
-  letter-spacing: -0.01em;
+  color: rgba(255, 215, 0, 0.55);
 }
 
 /* ── Responsive ── */
 @media (max-width: 480px) {
-  .auth-card {
-    max-width: 100%;
-  }
-
-  .auth-brand-name {
-    font-size: 2.25rem;
-  }
+  .auth-card { max-width: 100%; }
+  .auth-brand-name { font-size: 2.2rem; }
 }

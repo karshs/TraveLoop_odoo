@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
@@ -11,8 +11,8 @@ function Login() {
   const [error, setError]       = useState('');
   const [loading, setLoading]   = useState(false);
 
-  const navigate      = useNavigate();
-  const { setUser }   = useAuth();
+  const navigate    = useNavigate();
+  const { setUser } = useAuth();
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -50,16 +50,24 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-glow" />
+
+      {/* Back to home */}
+      <button className="auth-back-btn" onClick={() => navigate('/')}>
+        <ArrowLeft size={14} />
+        Home
+      </button>
+
       <div className="auth-card">
 
         {/* Brand */}
         <div className="auth-brand">
           <p className="auth-brand-sub">Log in to</p>
-          <h1 className="auth-brand-name">TraveLoop</h1>
+          <h1 className="auth-brand-name">PlannR</h1>
         </div>
 
         {/* Form */}
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+
           <div className={`auth-input-wrap ${focused === 'email' ? 'focused' : ''}`}>
             <Mail className="auth-input-icon" />
             <input
@@ -90,19 +98,27 @@ function Login() {
             />
           </div>
 
-          {error && <p className="auth-error">{error}</p>}
+          {error && <p className="auth-error" role="alert">{error}</p>}
 
+          {/* Button with arrow swap animation */}
           <button type="submit" className="auth-btn-primary" disabled={loading}>
             <span className="auth-btn-arrow-enter">
-              <ArrowRight className="auth-btn-icon" />
+              <svg className="auth-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </span>
             <span className="auth-btn-arrow-wrap">
               <span className="auth-btn-arrow-exit">
-                <ArrowRight className="auth-btn-icon" />
+                <svg className="auth-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </span>
               {loading ? 'Logging in…' : 'Log in'}
             </span>
           </button>
+
         </form>
 
         {/* Divider */}
@@ -113,7 +129,7 @@ function Login() {
         </div>
 
         {/* Google */}
-        <button className="auth-btn-google">
+        <button className="auth-btn-google" type="button">
           <svg className="auth-google-icon" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -123,10 +139,13 @@ function Login() {
           Continue with Google
         </button>
 
-        <button className="auth-link-btn" onClick={() => navigate('/register')}>
+        {/* Footer */}
+        <button className="auth-link-btn" type="button" onClick={() => navigate('/register')}>
           Create Account
         </button>
-        <p className="auth-footnote">Forgotten your password?</p>
+        <button className="auth-footnote" type="button">
+          Forgotten your password?
+        </button>
 
       </div>
     </div>

@@ -411,12 +411,22 @@ export function Onboarding() {
   return (
     <div className="ob-container">
       <div className="ob-glow" />
+
+      {/* Back to home */}
+      <button className="ob-back-btn" onClick={() => navigate('/')}>
+        <svg viewBox="0 0 24 24" className="ob-back-icon" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Home
+      </button>
+
       <div className="ob-card">
 
         {/* Brand */}
         <div className="ob-brand">
           <p className="ob-brand-sub">Sign up to</p>
-          <span className="ob-brand-name">TraveLoop</span>
+          <span className="ob-brand-name">PlannR</span>
         </div>
 
         {/* Progress */}

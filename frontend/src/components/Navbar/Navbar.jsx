@@ -1,12 +1,29 @@
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
+
+const NAV_LINKS = [
+  { label: 'Features', href: '#features' },
+  { label: 'Pricing',  href: '#pricing'  },
+  { label: 'Support',  href: '#support'  },
+];
+
+function ArrowIcon({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  );
+}
 
 export function Navbar() {
   const [hidden, setHidden] = useState(false);
+  const [activeHash, setActiveHash] = useState('');
   const lastY = useRef(0);
+  const location = useLocation();
 
+  // Hide on scroll-down, show on scroll-up
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
@@ -17,37 +34,62 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Track active hash for link highlight
+  useEffect(() => {
+    const onHashChange = () => setActiveHash(window.location.hash);
+    window.addEventListener('hashchange', onHashChange);
+    setActiveHash(window.location.hash);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, [location]);
+
   return (
-    <nav className={`navbar-wrapper ${hidden ? 'navbar-wrapper--hidden' : ''}`}>
+    <nav
+      className={`navbar-wrapper${hidden ? ' navbar-wrapper--hidden' : ''}`}
+      aria-label="Main navigation"
+    >
       <div className="navbar">
-        <div className="navbar-logo">
-          <span className="navbar-logo-text">TraveLoop</span>
-        </div>
-        <ul className="navbar-links">
-          {['Features', 'Pricing', 'Support'].map((label) => (
-            <li key={label}>
-              <a href={`#${label.toLowerCase()}`} className="navbar-link">
-                <span className="navbar-link-inner">
-                  <span className="navbar-link-top">{label}</span>
-                  <span className="navbar-link-bottom">{label}</span>
-                </span>
-              </a>
-            </li>
-          ))}
+
+        {/* Logo */}
+        <a href="/" className="navbar-logo" aria-label="TravelLoop home">
+          <span className="navbar-logo-text">PlannR</span>
+        </a>
+
+        {/* Nav links */}
+        <ul className="navbar-links" role="list">
+          {NAV_LINKS.map(({ label, href }) => {
+            const isActive = activeHash === href;
+            return (
+              <li key={label}>
+                <a
+                  href={href}
+                  className={`navbar-link${isActive ? ' active' : ''}`}
+                  aria-current={isActive ? 'true' : undefined}
+                >
+                  {isActive ? (
+                    label
+                  ) : (
+                    <span className="navbar-link-inner">
+                      <span className="navbar-link-top">{label}</span>
+                      <span className="navbar-link-bottom">{label}</span>
+                    </span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
+
+        {/* Divider */}
+        <div className="navbar-divider" aria-hidden="true" />
+
+        {/* CTA */}
         <Link to="/login" className="navbar-cta-link">
-          <button className="navbar-cta">
-            <span className="navbar-cta-arrow-enter">
-              <ArrowRight className="navbar-cta-icon" />
-            </span>
-            <span className="navbar-cta-arrow-wrap">
-              <span className="navbar-cta-arrow-exit">
-                <ArrowRight className="navbar-cta-icon" />
-              </span>
-              Get Started
-            </span>
+          <button className="navbar-cta" type="button">
+            <ArrowIcon className="navbar-cta-icon" />
+            Get Started
           </button>
         </Link>
+
       </div>
     </nav>
   );
