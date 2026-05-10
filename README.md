@@ -128,38 +128,6 @@ All endpoints return a consistent envelope:
 > Full route map (Cities, Budget, Checklist, Notes, Sharing, Admin) is in [`backend/Architechture.md`](./backend/Architechture.md).
 
 ---
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js ≥ 18
-- PostgreSQL
-- `backend/.env` (copy from `.env.example`)
-
-### Backend
-
-```bash
-cd backend
-npm install
-npx prisma migrate dev
-npm run prisma:seed
-npm run dev
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-API → `http://localhost:5000` · Client → `http://localhost:5173`
-
-
----
-
 ## License
 
 MIT
