@@ -6,6 +6,7 @@ import Hero from './components/Hero/Hero'
 import Login from './pages/Login/Login'
 import Onboarding from './pages/Onboarding/Onboarding'
 import Dashboard from './pages/Dashboard/Dashboard'
+import AuthCallback from './pages/Auth/AuthCallback'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Onboarding />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
