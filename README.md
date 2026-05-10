@@ -2,6 +2,8 @@
 
 > A full-stack travel planning platform for building multi-city itineraries, managing budgets, tracking activities, and sharing trips.
 
+🔗 **Live Demo:** [trips-plannr.vercel.app](https://trips-plannr.vercel.app)
+
 ---
 
 ## App Flow
