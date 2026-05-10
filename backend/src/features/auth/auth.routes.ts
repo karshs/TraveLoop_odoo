@@ -1,5 +1,7 @@
+// Auth routes — wiring only. No logic here.
+
 import { Router } from "express";
-import passport from "passport";
+import passport from "../../config/passport.js";
 import {
   signupHandler,
   loginHandler,
@@ -8,22 +10,13 @@ import {
 
 const router = Router();
 
-// ─────────────────────────────────────────────────────────────
-//  TRADITIONAL AUTH ROUTES
-// ─────────────────────────────────────────────────────────────
-
-// POST /api/v1/auth/signup
+// POST /signup
 router.post("/signup", signupHandler);
 
-// POST /api/v1/auth/login
+// POST /login
 router.post("/login", loginHandler);
 
-// ─────────────────────────────────────────────────────────────
-//  GOOGLE OAUTH ROUTES
-// ─────────────────────────────────────────────────────────────
-
-// GET /api/v1/auth/google
-// Initiates Google OAuth flow
+// GET /google — initiates Google OAuth flow
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -32,13 +25,12 @@ router.get(
   }),
 );
 
-// GET /api/v1/auth/google/callback
-// Google redirects here after user approves
+// GET /google/callback — Google redirects here after approval
 router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "/login?error=auth_failed",
+    failureRedirect: "/api/v1/auth/error",
   }),
   googleCallbackHandler,
 );

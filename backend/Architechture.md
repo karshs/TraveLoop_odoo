@@ -1,4 +1,4 @@
-# Traveloop — Backend Architecture & Database Design
+# Plannr — Backend Architecture & Database Design
 
 ---
 
@@ -206,7 +206,7 @@ For PUBLIC trips: appears in explore/public feed (future feature).
 ## 8. Scalable Folder Structure
 
 ```
-traveloop-backend/
+plannr-backend/
 ├── prisma/
 │   ├── schema.prisma
 │   ├── migrations/
@@ -562,7 +562,7 @@ async copyTrip(sourceTripId: string, userId: string) {
 ## 13. Environment Variables (.env)
 
 ```env
-DATABASE_URL="postgresql://user:pass@localhost:5432/traveloop"
+DATABASE_URL="postgresql://user:pass@localhost:5432/plannr"
 JWT_SECRET="your-super-secret-key"
 JWT_EXPIRES_IN="7d"
 CLOUDINARY_CLOUD_NAME=""

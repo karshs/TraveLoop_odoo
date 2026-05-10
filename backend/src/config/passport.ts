@@ -1,21 +1,33 @@
+// Passport config — strategy only. No DB logic.
+// Verify callback passes raw profile to controller via req.user
+
 import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import env from "./env.js";
+import {
+  Strategy as GoogleStrategy,
+  VerifyCallback,
+} from "passport-google-oauth20";
+import { env } from "./env.js";
 
 // ─────────────────────────────────────────────────────────────
-//  PASSPORT GOOGLE OAUTH STRATEGY
+//  GOOGLE OAUTH 2.0 STRATEGY
 // ─────────────────────────────────────────────────────────────
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID: env.GOOGLE_CLIENT_ID || "",
-      clientSecret: env.GOOGLE_CLIENT_SECRET || "",
-      callbackURL: env.GOOGLE_CALLBACK_URL || "",
+      clientID: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      callbackURL: env.GOOGLE_CALLBACK_URL,
     },
-    (accessToken, refreshToken, profile, done) => {
-      // Do NOT query DB here — just verify and pass profile through
-      // DB logic happens in the controller/service layer
+    (
+      accessToken: string,
+      refreshToken: string,
+      profile: any,
+      done: VerifyCallback,
+    ) => {
+      // Pass raw profile through — no DB calls, no transformations
+      // The profile will be attached to req.user by Passport middleware
+      // oauth.service.ts handles translation and validation
       done(null, profile);
     },
   ),

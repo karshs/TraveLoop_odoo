@@ -3,7 +3,7 @@ import { signup, login } from "./auth.service.js";
 import { handleGoogleCallback } from "./oauth.service.js";
 import { signupSchema, loginSchema } from "./auth.validation.js";
 import { sendSuccess, sendError } from "../../utils/response.js";
-import env from "../../config/env.js";
+import { env } from "../../config/env.js";
 
 // ─────────────────────────────────────────────────────────────
 //  SIGNUP HANDLER
@@ -15,28 +15,21 @@ export async function signupHandler(
 ): Promise<void> {
   try {
     // Validate input
-    const input = signupSchema.parse({
+    const validatedData = signupSchema.parse({
       ...req.body,
-      age: req.body.age ? Number(req.body.age) : undefined, // Coerce age to number
+      age: req.body.age ? Number(req.body.age) : undefined,
     });
 
     // Call signup service
-    const token = await signup(input);
+    const token = await signup(validatedData);
 
     // Return success response
-    sendSuccess(res, { token }, "User registered successfully", 201);
+    sendSuccess(res, { token }, "Account created successfully", 201);
   } catch (error: any) {
     if (error.name === "ZodError") {
-      // Validation error
-      const errors = error.errors.map((err: any) => ({
-        field: err.path.join("."),
-        message: err.message,
-      }));
-      sendError(res, "Validation failed", 400, errors);
-    } else if (error.message === "Email already in use") {
-      sendError(res, "Email already in use", 409);
+      sendError(res, "Validation failed", 400, error.errors);
     } else {
-      sendError(res, error.message || "Signup failed", 500);
+      sendError(res, error.message, 400);
     }
   }
 }
@@ -48,28 +41,18 @@ export async function signupHandler(
 export async function loginHandler(req: Request, res: Response): Promise<void> {
   try {
     // Validate input
-    const input = loginSchema.parse(req.body);
+    const validatedData = loginSchema.parse(req.body);
 
     // Call login service
-    const token = await login(input);
+    const token = await login(validatedData);
 
     // Return success response
     sendSuccess(res, { token }, "Login successful");
   } catch (error: any) {
     if (error.name === "ZodError") {
-      // Validation error
-      const errors = error.errors.map((err: any) => ({
-        field: err.path.join("."),
-        message: err.message,
-      }));
-      sendError(res, "Validation failed", 400, errors);
-    } else if (
-      error.message === "Invalid email or password" ||
-      error.message === "Please sign in with Google"
-    ) {
-      sendError(res, error.message, 401);
+      sendError(res, "Validation failed", 400, error.errors);
     } else {
-      sendError(res, error.message || "Login failed", 500);
+      sendError(res, error.message, 401);
     }
   }
 }
@@ -83,19 +66,11 @@ export async function googleCallbackHandler(
   res: Response,
 ): Promise<void> {
   try {
-    // Extract profile from Passport (attached by middleware)
+    // Extract profile from Passport middleware
     const profile = (req as any).user;
 
-    if (!profile) {
-      sendError(res, "No profile data from Google", 400);
-      return;
-    }
-
-    // Handle profile extraction and validation
-    const callbackInput = handleGoogleCallback(profile);
-
-    // Find or create user
-    const token = await findOrCreateGoogleUser(callbackInput);
+    // Call oauth service to translate profile and get JWT
+    const token = await handleGoogleCallback(profile);
 
     // Redirect to frontend with JWT in query param
     const redirectUrl = `${env.CLIENT_URL}/auth/callback?token=${token}`;
@@ -103,10 +78,8 @@ export async function googleCallbackHandler(
   } catch (error: any) {
     console.error("Google callback error:", error);
 
-    // Redirect to login with error
-    const errorUrl = `${env.CLIENT_URL}/login?error=${encodeURIComponent(
-      error.message || "Google authentication failed",
-    )}`;
+    // Redirect to error page
+    const errorUrl = `${env.CLIENT_URL}/auth/error`;
     res.redirect(errorUrl);
   }
 }

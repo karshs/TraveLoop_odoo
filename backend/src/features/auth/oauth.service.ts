@@ -9,9 +9,7 @@ import { findOrCreateGoogleUser } from "./auth.service.js";
 //  into validated input, then exchange for JWT. No DB logic here.
 // ─────────────────────────────────────────────────────────────
 
-export async function handleGoogleCallback(
-  profile: any,
-): Promise<string> {
+export async function handleGoogleCallback(profile: any): Promise<string> {
   // Extract fields from raw Passport profile object
   const google_id = profile.id;
   const email = profile.emails?.[0]?.value;
